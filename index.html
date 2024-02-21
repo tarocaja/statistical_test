@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>統計検定選択ツール</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .question, .result {
+    margin: 20px 0;
+  }
+  .answers {
+    list-style: none;
+    padding: 0;
+  }
+  .answers li {
+    margin-bottom: 10px;
+  }
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div id="question1" class="question">
+    <p>データの尺度は？</p>
+    <ul class="answers">
+      <li><input type="radio" id="nominal" name="scale" value="nominal"><label for="nominal">名義尺度</label></li>
+      <li><input type="radio" id="ordinal" name="scale" value="ordinal"><label for="ordinal">順序尺度</label></li>
+      <li><input type="radio" id="interval" name="scale" value="interval"><label for="interval">間隔尺度</label></li>
+      <li><input type="radio" id="ratio" name="scale" value="ratio"><label for="ratio">比例尺度</label></li>
+    </ul>
+    <button onclick="nextQuestion('scale')">次へ</button>
+  </div>
+
+  <div id="question2" class="question" style="display: none;">
+    <!-- 次の質問はJavaScriptで動的に生成されます -->
+  </div>
+
+  <div id="question3" class="question" style="display: none;">
+    <!-- 次の質問はJavaScriptで動的に生成されます -->
+  </div>
+
+  <div id="question4" class="question" style="display: none;">
+    <!-- 次の質問はJavaScriptで動的に生成されます -->
+  </div>
+
+  <div id="result" class="result" style="display: none;">
+    <!-- 結果はここに表示されます -->
+  </div>
+</div>
+
+  <script>
+    // この関数はユーザーの選択に応じて次の質問を表示するために使います
+    function nextQuestion(previous) {
+      // ここにロジックを実装します
+      var selectedValue = document.querySelector('input[name="' + previous + '"]:checked').value;
+      // 次の質問の内容を決めるロジック
+      var nextQuestionHtml = '';
+      switch (selectedValue) {
+        case 'nominal':
+          // ここに次の質問を生成するコードを実装します
+          break;
+        // 他のケースも同様に
+      }
+      // 次の質問のHTMLをセット
+      document.getElementById('question2').innerHTML = nextQuestionHtml;
+      document.getElementById('question2').style.display = 'block';
+
+      document.getElementById('question3').innerHTML = nextQuestionHtml;
+      document.getElementById('question3').style.display = 'block';      
+    }
+    
+    // この関数は最終的な検定方法をユーザーに表示するために使います
+    function showResult(test) {
+      var resultText = '';
+      switch (test) {
+        case 'fisher':
+          resultText = 'あなたのデータにはフィッシャーの正確確率検定が適しています。';
+          break;
+        // 他の検定結果のテキストも同様に
+      }
+      document.getElementById('result').innerHTML = resultText;
+      document.getElementById('result').style.display = 'block';
+    }
+    </script>
+    
+    
+    <script>
+    // 次の質問を表示する関数
+    function nextQuestion(previous) {
+      var selectedValue = document.querySelector('input[name="' + previous + '"]:checked').value;
+      var questionDiv = document.getElementById('question2');
+      var nextQuestionHtml = '';
+    
+      switch (selectedValue) {
+        case 'nominal':
+          nextQuestionHtml = `
+            <p>クロス集計表は2×2ですか？</p>
+            <ul class="answers">
+              <li><input type="radio" id="yes2x2" name="crossTab" value="yes"><label for="yes2x2">はい</label></li>
+              <li><input type="radio" id="no2x2" name="crossTab" value="no"><label for="no2x2">いいえ</label></li>
+            </ul>
+            <button onclick="evaluateCrossTab('crossTab')">次へ</button>
+          `;
+          break
+    
+        case 'ordinal':
+          nextQuestionHtml = `
+            <p>グループ間に対応はありますか？</p>
+            <ul class="answers">
+              <li><input type="radio" id="yes2x2" name="ordinal" value="yes"><label for="yes2x2">はい</label></li>
+              <li><input type="radio" id="no2x2" name="ordinal" value="no"><label for="no2x2">いいえ</label></li>
+            </ul>
+            <button onclick="evaluateordinal('ordinal')">次へ</button>
+          `;
+          break;
+
+          case 'interval':
+          nextQuestionHtml = `
+            <p>グループ間に対応はありますか？</p>
+            <ul class="answers">
+              <li><input type="radio" id="yes2x2" name="interval" value="yes"><label for="yes2x2">はい</label></li>
+              <li><input type="radio" id="no2x2" name="interval" value="no"><label for="no2x2">いいえ</label></li>
+            </ul>
+            <button onclick="evaluateinterval('interval')">次へ</button>
+          `;
+          break;
+
+          case 'ratio':
+          nextQuestionHtml = `
+            <p>グループ間に対応はありますか？</p>
+            <ul class="answers">
+              <li><input type="radio" id="yes2x2" name="interval" value="yes"><label for="yes2x2">はい</label></li>
+              <li><input type="radio" id="no2x2" name="interval" value="no"><label for="no2x2">いいえ</label></li>
+            </ul>
+            <button onclick="evaluateinterval('interval')">次へ</button>
+          `;
+          break;
+      }
+    
+      questionDiv.innerHTML = nextQuestionHtml;
+      questionDiv.style.display = 'block';
+    }
+
+  
+    document.querySelectorAll('input[name="scale"]').forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    // ここで後続の質問をクリアし、非表示にする
+    document.getElementById('question2').innerHTML = '';
+    document.getElementById('question2').style.display = 'none';
+    document.getElementById('question3').innerHTML = '';
+    document.getElementById('question3').style.display = 'none';
+    document.getElementById('question4').innerHTML = '';
+    document.getElementById('question4').style.display = 'none';
+    // 必要に応じて他の質問や結果表示部分もクリア
+  });
+});
+
+
+    // 2x2のクロス集計表の評価を行う関数
+    function evaluateCrossTab(question) {
+      var selectedValue = document.querySelector('input[name="' + question + '"]:checked').value;
+      var resultDiv = document.getElementById('question3');
+      var resultText = '';
+    
+      if(selectedValue === 'yes') {
+        resultText += '<p>データ数は少ないですか？</p>';
+        resultText += `
+          <ul class="answers">
+            <li><input type="radio" id="fewDataYes" name="fewData" value="yes"><label for="fewDataYes">はい</label></li>
+            <li><input type="radio" id="fewDataNo" name="fewData" value="no"><label for="fewDataNo">いいえ</label></li>
+          </ul>
+          <button onclick="evaluateDataAmount('fewData')">次へ</button>
+        `;
+      } else {
+        resultText = '<p>カイ二乗検定が適しています。</p>';
+      }
+    
+      resultDiv.innerHTML = resultText;
+      resultDiv.style.display = 'block';
+    }
+    
+    // データの量を評価する関数
+    function evaluateDataAmount(question) {
+      var selectedValue = document.querySelector('input[name="' + question + '"]:checked').value;
+      var resultDiv = document.getElementById('question4');
+      var resultText = '';
+    
+      if(selectedValue === 'yes') {
+        resultText = '<p>フィッシャーの正確検定が適しています。</p>';
+      } else {
+        resultText = '<p>カイ二乗検定が適しています。</p>';
+      }
+    
+      resultDiv.innerHTML = resultText;
+      resultDiv.style.display = 'block';
+    }
+    
+
+  function evaluateordinal(question) {
+    var selectedValue = document.querySelector('input[name="' + question + '"]:checked').value;
+      var resultDiv = document.getElementById('question3');
+      var resultText = '';
+    
+      if(selectedValue === 'yes') {
+        resultText = '<p>ウィルコクソンの符号順位検定が適しています。</p>';
+      } else {
+        resultText = '<p>マン・ホイットニーのU検定が適しています。</p>';
+      }
+    
+      resultDiv.innerHTML = resultText;
+      resultDiv.style.display = 'block';
+    }
+  
+  function evaluateinterval(question) {
+    var selectedValue = document.querySelector('input[name="' + question + '"]:checked').value;
+      var resultDiv = document.getElementById('question3');
+      var resultText = '';
+    
+      if(selectedValue === 'yes') {
+        resultText = '<p>対応のあるt検定が適しています。</p>';
+      } else {
+        resultText = '<p>対応のないt検定が適しています。</p>';
+      }
+    
+      resultDiv.innerHTML = resultText;
+      resultDiv.style.display = 'block';
+    }
+
+
+    </script>
+    </body>
+    </html>
+    
